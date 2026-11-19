@@ -34,8 +34,24 @@ final class PromiseExceptionTest extends TestCase
         $guzzlePromise = new \GuzzleHttp\Promise\Promise();
         $guzzlePromise->reject($reason);
         $promise = new Promise($guzzlePromise, $request);
-        $this->expectException($adapterExceptionClass);
-        $promise->wait();
+
+        try {
+            $promise->wait();
+        } catch (\Throwable $e) {
+            $this->assertSame($adapterExceptionClass, get_class($e));
+
+            if ($reason instanceof \Throwable) {
+                $this->assertSame($reason, $e->getPrevious());
+            }
+            if ($reason instanceof GuzzleExceptions\ResponseException) {
+                $this->assertInstanceOf(HttpException::class, $e);
+                $this->assertSame($reason->getResponse(), $e->getResponse());
+            }
+
+            return;
+        }
+
+        $this->fail('Expected exception '.$adapterExceptionClass.' was not thrown');
     }
 
     public static function exceptionThatIsThrownForGuzzleExceptionProvider(): array
@@ -44,18 +60,24 @@ final class PromiseExceptionTest extends TestCase
         $response = (new PromiseExceptionTest('response'))->getMockBuilder(ResponseInterface::class)->getMock();
 
         return [
+            // no response received
+            [$request, new GuzzleExceptions\NetworkException('foo', $request), NetworkException::class],
+            [$request, new GuzzleExceptions\NetworkTimeoutException('foo', $request), NetworkException::class],
             [$request, new GuzzleExceptions\ConnectException('foo', $request), NetworkException::class],
-            [$request, new GuzzleExceptions\TooManyRedirectsException('foo', $request, $response), RequestException::class],
+            [$request, new GuzzleExceptions\ConnectTimeoutException('foo', $request), NetworkException::class],
+            [$request, new GuzzleExceptions\RequestException('foo', $request), RequestException::class],
+            // response received
             [$request, new GuzzleExceptions\ResponseException('foo', $request, $response), HttpException::class],
+            [$request, new GuzzleExceptions\TooManyRedirectsException('foo', $request, $response), HttpException::class],
             [$request, new GuzzleExceptions\BadResponseException('foo', $request, $response), HttpException::class],
             [$request, new GuzzleExceptions\ClientException('foo', $request, $response), HttpException::class],
             [$request, new GuzzleExceptions\ServerException('foo', $request, $response), HttpException::class],
+            [$request, new GuzzleExceptions\ResponseTransferException('foo', $request, $response), HttpException::class],
+            [$request, new GuzzleExceptions\ResponseTimeoutException('foo', $request, $response), HttpException::class],
+            // other Guzzle exceptions
             [$request, new GuzzleExceptions\TransferException('foo', $request), TransferException::class],
-            // check cases without response
-            [$request, new GuzzleExceptions\RequestException('foo', $request), RequestException::class],
-            [$request, new GuzzleExceptions\BadResponseException('foo', $request, $response), RequestException::class],
-            [$request, new GuzzleExceptions\ClientException('foo', $request, $response), RequestException::class],
-            [$request, new GuzzleExceptions\ServerException('foo', $request, $response), RequestException::class],
+            [$request, new GuzzleExceptions\HandlerClosedException('foo', $request), TransferException::class],
+            [$request, new GuzzleExceptions\InvalidArgumentException('foo'), TransferException::class],
             // Non PSR-18 Exceptions thrown
             [$request, new \Exception('foo'), TransferException::class],
             [$request, new \Error('foo'), TransferException::class],

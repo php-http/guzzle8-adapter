@@ -103,21 +103,22 @@ final class Promise implements HttpPromise
      */
     private function handleException(GuzzleExceptions\GuzzleException $exception)
     {
-        if ($exception instanceof GuzzleExceptions\ConnectException) {
+        // No response received: connection failures, connect timeouts and other network timeouts
+        if ($exception instanceof GuzzleExceptions\NetworkException) {
             return new HttplugException\NetworkException($exception->getMessage(), $exception->getRequest(), $exception);
         }
 
-        if ($exception instanceof GuzzleExceptions\RequestException) {
-            // Make sure we have a response for the HttpException
-            if ($exception instanceof GuzzleExceptions\ResponseException) {
-                return new HttplugException\HttpException(
-                    $exception->getMessage(),
-                    $exception->getRequest(),
-                    $exception->getResponse(),
-                    $exception
-                );
-            }
+        // Response headers were received (bad status codes, too many redirects, response transfer failures)
+        if ($exception instanceof GuzzleExceptions\ResponseException) {
+            return new HttplugException\HttpException(
+                $exception->getMessage(),
+                $exception->getRequest(),
+                $exception->getResponse(),
+                $exception
+            );
+        }
 
+        if ($exception instanceof GuzzleExceptions\RequestException) {
             return new HttplugException\RequestException($exception->getMessage(), $exception->getRequest(), $exception);
         }
 
