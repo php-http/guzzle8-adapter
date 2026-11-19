@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\Adapter\Guzzle7\Tests;
+namespace Http\Adapter\Guzzle8\Tests;
 
 use GuzzleHttp\Handler\CurlMultiHandler;
 

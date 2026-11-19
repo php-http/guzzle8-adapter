@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Http\Adapter\Guzzle7;
+namespace Http\Adapter\Guzzle8;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
@@ -15,7 +15,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * HTTP Adapter for Guzzle 7.
+ * HTTP Adapter for Guzzle 8.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -36,7 +36,7 @@ final class Client implements HttpClient, HttpAsyncClient
     }
 
     /**
-     * Factory method to create the Guzzle 7 adapter with custom Guzzle configuration.
+     * Factory method to create the Guzzle 8 adapter with custom Guzzle configuration.
      */
     public static function createWithConfig(array $config): Client
     {

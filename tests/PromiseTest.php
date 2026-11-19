@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Http\Adapter\Guzzle7\Tests;
+namespace Http\Adapter\Guzzle8\Tests;
 
 use GuzzleHttp\Promise\RejectedPromise;
-use Http\Adapter\Guzzle7\Promise;
+use Http\Adapter\Guzzle8\Promise;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;

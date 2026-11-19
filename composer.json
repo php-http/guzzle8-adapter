@@ -1,6 +1,6 @@
 {
-    "name": "php-http/guzzle7-adapter",
-    "description": "Guzzle 7 HTTP Adapter",
+    "name": "php-http/guzzle8-adapter",
+    "description": "Guzzle 8 HTTP Adapter",
     "license": "MIT",
     "keywords": ["guzzle", "http"],
     "homepage": "http://httplug.io",
@@ -29,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Http\\Adapter\\Guzzle7\\": "src/"
+            "Http\\Adapter\\Guzzle8\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Http\\Adapter\\Guzzle7\\Tests\\": "tests/"
+            "Http\\Adapter\\Guzzle8\\Tests\\": "tests/"
         }
     },
     "scripts": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Http\Adapter\Guzzle7\Client;
+use Http\Adapter\Guzzle8\Client;
 use Http\Client\Tests\HttpClientTest;
 use Psr\Http\Client\ClientInterface;
 

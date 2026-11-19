@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Http\Adapter\Guzzle7\Tests;
+namespace Http\Adapter\Guzzle8\Tests;
 
 use GuzzleHttp\Exception as GuzzleExceptions;
-use Http\Adapter\Guzzle7\Exception\UnexpectedValueException;
-use Http\Adapter\Guzzle7\Promise;
+use Http\Adapter\Guzzle8\Exception\UnexpectedValueException;
+use Http\Adapter\Guzzle8\Promise;
 use Http\Client\Exception\HttpException;
 use Http\Client\Exception\NetworkException;
 use Http\Client\Exception\RequestException;
