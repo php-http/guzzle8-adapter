@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Http\Adapter\Guzzle7;
+namespace Http\Adapter\Guzzle8;
 
 use GuzzleHttp\Exception as GuzzleExceptions;
 use GuzzleHttp\Promise\PromiseInterface;
-use Http\Adapter\Guzzle7\Exception\UnexpectedValueException;
+use Http\Adapter\Guzzle8\Exception\UnexpectedValueException;
 use Http\Client\Exception as HttplugException;
 use Http\Promise\Promise as HttpPromise;
 use Psr\Http\Message\RequestInterface;
@@ -61,9 +61,9 @@ final class Promise implements HttpPromise
             } elseif ($reason instanceof GuzzleExceptions\GuzzleException) {
                 $this->exception = $this->handleException($reason);
             } elseif ($reason instanceof \Throwable) {
-                $this->exception = new HttplugException\TransferException('Invalid exception returned from Guzzle7', 0, $reason);
+                $this->exception = new HttplugException\TransferException('Invalid exception returned from Guzzle8', 0, $reason);
             } else {
-                $this->exception = new UnexpectedValueException('Reason returned from Guzzle7 must be an Exception');
+                $this->exception = new UnexpectedValueException('Reason returned from Guzzle8 must be an Exception');
             }
 
             throw $this->exception;
@@ -103,21 +103,22 @@ final class Promise implements HttpPromise
      */
     private function handleException(GuzzleExceptions\GuzzleException $exception)
     {
-        if ($exception instanceof GuzzleExceptions\ConnectException) {
+        // No response received: connection failures, connect timeouts and other network timeouts
+        if ($exception instanceof GuzzleExceptions\NetworkException) {
             return new HttplugException\NetworkException($exception->getMessage(), $exception->getRequest(), $exception);
         }
 
-        if ($exception instanceof GuzzleExceptions\RequestException) {
-            // Make sure we have a response for the HttpException
-            if ($exception->hasResponse()) {
-                return new HttplugException\HttpException(
-                    $exception->getMessage(),
-                    $exception->getRequest(),
-                    $exception->getResponse(),
-                    $exception
-                );
-            }
+        // Response headers were received (bad status codes, too many redirects, response transfer failures)
+        if ($exception instanceof GuzzleExceptions\ResponseException) {
+            return new HttplugException\HttpException(
+                $exception->getMessage(),
+                $exception->getRequest(),
+                $exception->getResponse(),
+                $exception
+            );
+        }
 
+        if ($exception instanceof GuzzleExceptions\RequestException) {
             return new HttplugException\RequestException($exception->getMessage(), $exception->getRequest(), $exception);
         }
 
