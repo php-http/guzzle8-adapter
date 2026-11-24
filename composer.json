@@ -1,6 +1,6 @@
 {
-    "name": "php-http/guzzle7-adapter",
-    "description": "Guzzle 7 HTTP Adapter",
+    "name": "php-http/guzzle8-adapter",
+    "description": "Guzzle 8 HTTP Adapter",
     "license": "MIT",
     "keywords": ["guzzle", "http"],
     "homepage": "http://httplug.io",
@@ -11,16 +11,15 @@
         }
     ],
     "require": {
-        "php": "^7.3 | ^8.0",
+        "php": "^7.4 | ^8.0",
         "php-http/httplug": "^2.4",
         "psr/http-client": "^1.0.3",
-        "guzzlehttp/guzzle": "^7.10"
+        "guzzlehttp/guzzle": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6.31 || ^10.0 || ^11.0 || ^12.0",
-        "php-http/client-integration-tests": "^3.0 || ^4.0",
-        "phpspec/prophecy-phpunit": "^2.4",
-        "php-http/message-factory": "^1.1"
+        "php-http/client-integration-tests": "^4.1.1",
+        "phpspec/prophecy-phpunit": "^2.4"
     },
     "provide": {
         "php-http/client-implementation": "1.0",
@@ -29,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Http\\Adapter\\Guzzle7\\": "src/"
+            "Http\\Adapter\\Guzzle8\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Http\\Adapter\\Guzzle7\\Tests\\": "tests/"
+            "Http\\Adapter\\Guzzle8\\Tests\\": "tests/"
         }
     },
     "scripts": {

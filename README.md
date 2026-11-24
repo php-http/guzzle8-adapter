@@ -1,22 +1,22 @@
-# Guzzle 7 HTTP Adapter
+# Guzzle 8 HTTP Adapter
 
-[![Latest Version](https://img.shields.io/github/release/php-http/guzzle7-adapter.svg?style=flat-square)](https://github.com/php-http/guzzle7-adapter/releases)
+[![Latest Version](https://img.shields.io/github/release/php-http/guzzle8-adapter.svg?style=flat-square)](https://github.com/php-http/guzzle8-adapter/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Total Downloads](https://img.shields.io/packagist/dt/php-http/guzzle7-adapter.svg?style=flat-square)](https://packagist.org/packages/php-http/guzzle7-adapter)
+[![Total Downloads](https://img.shields.io/packagist/dt/php-http/guzzle8-adapter.svg?style=flat-square)](https://packagist.org/packages/php-http/guzzle8-adapter)
 
-**Guzzle 7 HTTP Adapter.**
+**Guzzle 8 HTTP Adapter.**
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require php-http/guzzle7-adapter
+$ composer require php-http/guzzle8-adapter
 ```
 
 ## Documentation
 
-Please see the [official documentation](http://docs.php-http.org/en/latest/clients/guzzle7-adapter.html).
+Please see the [official documentation](http://docs.php-http.org/en/latest/clients/guzzle8-adapter.html).
 
 ## Testing
 

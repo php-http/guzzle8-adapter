@@ -10,7 +10,7 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="Guzzle 7 HTTP Adapter Test Suite">
+    <testsuite name="Guzzle 8 HTTP Adapter Test Suite">
       <directory>tests/</directory>
     </testsuite>
   </testsuites>
